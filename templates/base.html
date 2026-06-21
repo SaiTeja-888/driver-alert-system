@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Driver Alert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <i class="fas fa-shield-alt logo-icon"></i>
+                <h2>DRIVER AI</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="{% if active_page == 'dashboard' %}active{% endif %}">
+                    <a href="{{ url_for('views.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li class="{% if active_page == 'live' %}active{% endif %}">
+                    <a href="{{ url_for('views.live') }}"><i class="fas fa-video"></i> Live Monitor</a>
+                </li>
+                <li class="{% if active_page == 'analytics' %}active{% endif %}">
+                    <a href="{{ url_for('views.analytics') }}"><i class="fas fa-chart-line"></i> Analytics</a>
+                </li>
+                <li class="{% if active_page == 'reports' %}active{% endif %}">
+                    <a href="{{ url_for('views.reports') }}"><i class="fas fa-file-alt"></i> Reports</a>
+                </li>
+                <li class="{% if active_page == 'settings' %}active{% endif %}">
+                    <a href="{{ url_for('views.settings') }}"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+            </ul>
+            <div class="system-status">
+                <div class="status-indicator">
+                    <span class="dot" id="system-dot"></span>
+                    <span id="system-text">System Active</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar glass-panel">
+                <div class="header-title">
+                    <h1>{% block page_title %}Overview{% endblock %}</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="risk-badge" id="global-risk-badge">
+                        RISK: <span id="global-risk-level">CALCULATING</span>
+                    </div>
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-wrapper">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

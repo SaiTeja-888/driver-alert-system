@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="settings-container glass-panel fade-in">
+    <h2>System Configuration</h2>
+    
+    <div class="settings-group" style="margin-top: 2rem;">
+        <h3>Camera Settings</h3>
+        <label>
+            <input type="checkbox" checked> Auto-start camera
+        </label>
+    </div>
+    
+    <div class="settings-group" style="margin-top: 2rem;">
+        <h3>Alert Settings</h3>
+        <label>
+            <input type="checkbox" checked> Enable Voice Alerts
+        </label><br><br>
+        <label>
+            Risk Threshold: 
+            <select>
+                <option>Low (80)</option>
+                <option selected>Guarded (60)</option>
+                <option>High (40)</option>
+            </select>
+        </label>
+    </div>
+</div>
+{% endblock %}

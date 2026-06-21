@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block page_title %}Live Monitor{% endblock %}
+
+{% block content %}
+<div class="live-monitor-container glass-panel fade-in">
+    <div class="video-wrapper">
+        <img src="{{ url_for('api.video_feed') }}" alt="Live HD Feed" class="live-video">
+        
+        <div class="hud-overlay top-left">
+            <div class="hud-item">FPS: <span id="live-fps">--</span></div>
+            <div class="hud-item">STATUS: <span id="live-camera-status">--</span></div>
+        </div>
+        
+        <div class="hud-overlay top-right">
+            <div class="hud-item attention">ATTENTION: <span id="live-attention">--</span></div>
+        </div>
+        
+        <div class="hud-overlay bottom-bar">
+            <div class="telemetry-grid">
+                <div class="telemetry-item">
+                    <span class="label">EYES</span>
+                    <span class="value" id="live-eye-status">--</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">HEAD</span>
+                    <span class="value" id="live-head-pose">--</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">PHONE</span>
+                    <span class="value" id="live-phone-status">--</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">YAWN</span>
+                    <span class="value" id="live-yawning">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert-overlay" id="live-alert-overlay" style="display: none;">
+            <div class="alert-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="live-alert-text">ALERT</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

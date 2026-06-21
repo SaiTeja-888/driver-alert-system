@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block page_title %}Analytics{% endblock %}
+
+{% block content %}
+<div class="analytics-grid">
+    <div class="chart-container glass-panel fade-in">
+        <h2>Event Distribution</h2>
+        <canvas id="eventPieChart"></canvas>
+    </div>
+    
+    <div class="chart-container glass-panel fade-in delay-1">
+        <h2>Risk Trend</h2>
+        <canvas id="riskLineChart"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('/api/stats')
+            .then(r => r.json())
+            .then(data => {
+                const ctxPie = document.getElementById('eventPieChart').getContext('2d');
+                new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Drowsiness', 'Phone', 'Distraction', 'Yawning'],
+                        datasets: [{
+                            data: [data.drowsiness || 0, data.phone_usage || 0, data.distraction || 0, data.yawning || 0],
+                            backgroundColor: ['#ff4757', '#ffb142', '#2ed573', '#1e90ff'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#fff' } }
+                        }
+                    }
+                });
+                
+                // Placeholder Risk Line Chart (needs historical data API to be fully dynamic)
+                const ctxLine = document.getElementById('riskLineChart').getContext('2d');
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['10m', '8m', '6m', '4m', '2m', 'Now'],
+                        datasets: [{
+                            label: 'Risk Score',
+                            data: [10, 15, 20, 15, 30, 10], // Dummy data
+                            borderColor: '#ff4757',
+                            tension: 0.4,
+                            fill: true,
+                            backgroundColor: 'rgba(255, 71, 87, 0.2)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                            x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        }
+                    }
+                });
+            });
+    });
+</script>
+{% endblock %}

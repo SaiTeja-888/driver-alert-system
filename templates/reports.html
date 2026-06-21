@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_title %}Reports{% endblock %}
+
+{% block content %}
+<div class="reports-container glass-panel fade-in">
+    <h2>Generate PDF Report</h2>
+    <p>Export the current driving session analytics, risk scores, and event timeline.</p>
+    
+    <div class="report-actions" style="margin-top: 2rem;">
+        <button class="btn-primary" onclick="alert('PDF Generation Not Fully Implemented in Prototype')">
+            <i class="fas fa-file-pdf"></i> Download PDF
+        </button>
+        <button class="btn-secondary" onclick="alert('CSV Export Not Fully Implemented in Prototype')">
+            <i class="fas fa-file-csv"></i> Download CSV
+        </button>
+    </div>
+</div>
+{% endblock %}

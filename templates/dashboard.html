@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <!-- Top Stats Row -->
+    <div class="stat-card glass-panel fade-in">
+        <div class="stat-icon"><i class="fas fa-brain"></i></div>
+        <div class="stat-info">
+            <h3>Attention Score</h3>
+            <div class="stat-value" id="dash-attention">--</div>
+        </div>
+    </div>
+    <div class="stat-card glass-panel fade-in delay-1">
+        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <div class="stat-info">
+            <h3>Total Events</h3>
+            <div class="stat-value" id="dash-total-events">--</div>
+        </div>
+    </div>
+    <div class="stat-card glass-panel fade-in delay-2">
+        <div class="stat-icon"><i class="fas fa-video"></i></div>
+        <div class="stat-info">
+            <h3>Camera Status</h3>
+            <div class="stat-value" id="dash-camera-status">--</div>
+        </div>
+    </div>
+    <div class="stat-card glass-panel fade-in delay-3">
+        <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
+        <div class="stat-info">
+            <h3>System FPS</h3>
+            <div class="stat-value" id="dash-fps">--</div>
+        </div>
+    </div>
+
+    <!-- Live Preview & Event Log -->
+    <div class="main-panel glass-panel fade-in delay-4">
+        <div class="panel-header">
+            <h2>Live Feed Preview</h2>
+            <a href="{{ url_for('views.live') }}" class="btn-primary">Full View</a>
+        </div>
+        <div class="video-preview-container">
+            <img src="{{ url_for('api.video_feed') }}" alt="Live Feed" class="video-preview">
+            <div class="overlay-stats">
+                <div class="overlay-stat">EAR: <span id="dash-ear">--</span></div>
+                <div class="overlay-stat">MAR: <span id="dash-mar">--</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="side-panel glass-panel fade-in delay-5">
+        <div class="panel-header">
+            <h2>Recent Events</h2>
+        </div>
+        <div class="event-list" id="dash-events">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+</div>
+{% endblock %}
