@@ -26,7 +26,7 @@ def create_app():
     atexit.register(cleanup)
 
     return app
-
+app = create_app()
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", "5000"))
     debug = os.environ.get("FLASK_DEBUG", "0") == "1"
@@ -35,7 +35,5 @@ if __name__ == '__main__':
     print("AI Driver Dashboard starting...")
     print(f"URL: http://127.0.0.1:{port}")
     print("=======================================")
-
-    app = create_app()
     # use_reloader=False is critical to prevent the camera thread from starting twice
     app.run(host="0.0.0.0", port=port, debug=debug, use_reloader=False, threaded=True)
