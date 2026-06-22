@@ -4,11 +4,11 @@ views_bp = Blueprint('views', __name__)
 
 @views_bp.route('/')
 def dashboard():
-    return render_template('dashboard.html', active_page='dashboard')
+    return render_template('dashboard.html', active_page='dashboard', page_title='Dashboard')
 
 @views_bp.route('/live')
 def live():
-    return render_template('live.html', active_page='live')
+    return render_template('live.html', active_page='live', page_title='Live Monitor')
 
 @views_bp.route('/analytics')
 def analytics():

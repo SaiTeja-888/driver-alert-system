@@ -1,48 +1,84 @@
 {% extends "base.html" %}
 
-{% block page_title %}Live Monitor{% endblock %}
+{% block page_title %}{{ page_title | default('Live Monitor') }}{% endblock %}
 
 {% block content %}
-<div class="live-monitor-container glass-panel fade-in">
-    <div class="video-wrapper">
-        <img src="{{ url_for('api.video_feed') }}" alt="Live HD Feed" class="live-video">
-        
-        <div class="hud-overlay top-left">
-            <div class="hud-item">FPS: <span id="live-fps">--</span></div>
-            <div class="hud-item">STATUS: <span id="live-camera-status">--</span></div>
+<section class="monitor-shell fade-in" data-monitor-root>
+    <div class="video-stage glass-panel">
+        <video id="camera-preview" class="camera-preview" autoplay muted playsinline></video>
+        <canvas id="capture-canvas" hidden></canvas>
+
+        <div class="video-status-bar">
+            <span class="status-pill" id="connection-status">DISCONNECTED</span>
+            <span class="status-pill">AI FPS <strong id="live-fps">0</strong></span>
+            <span class="status-pill">CAM FPS <strong id="client-fps">0</strong></span>
         </div>
-        
-        <div class="hud-overlay top-right">
-            <div class="hud-item attention">ATTENTION: <span id="live-attention">--</span></div>
+
+        <div class="risk-readout" id="risk-readout">
+            <span id="live-risk-level">LOW</span>
+            <strong id="live-attention">100</strong>
         </div>
-        
-        <div class="hud-overlay bottom-bar">
-            <div class="telemetry-grid">
-                <div class="telemetry-item">
-                    <span class="label">EYES</span>
-                    <span class="value" id="live-eye-status">--</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="label">HEAD</span>
-                    <span class="value" id="live-head-pose">--</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="label">PHONE</span>
-                    <span class="value" id="live-phone-status">--</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="label">YAWN</span>
-                    <span class="value" id="live-yawning">--</span>
-                </div>
-            </div>
+
+        <div class="alert-strip" id="live-alert-overlay">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="live-alert-text">CLEAR</span>
         </div>
-        
-        <div class="alert-overlay" id="live-alert-overlay" style="display: none;">
-            <div class="alert-box">
-                <i class="fas fa-exclamation-triangle"></i>
-                <span id="live-alert-text">ALERT</span>
-            </div>
-        </div>
+
+        <button class="start-button" id="start-monitor" type="button">
+            <i class="fas fa-video"></i>
+            <span>Start Monitoring</span>
+        </button>
     </div>
-</div>
+
+    <div class="metric-grid">
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Attention Score</span>
+            <strong class="metric-value" id="metric-attention">100</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Risk Score</span>
+            <strong class="metric-value" id="metric-risk-score">0</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Risk Level</span>
+            <strong class="metric-value" id="metric-risk-level">LOW</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Phone Status</span>
+            <strong class="metric-value" id="live-phone-status">NO</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Eye Status</span>
+            <strong class="metric-value" id="live-eye-status">OPEN</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Head Pose</span>
+            <strong class="metric-value" id="live-head-pose">CENTER</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Yawning Status</span>
+            <strong class="metric-value" id="live-yawning">NO</strong>
+        </article>
+        <article class="metric-card glass-panel">
+            <span class="metric-label">Connection</span>
+            <strong class="metric-value" id="metric-connection">DISCONNECTED</strong>
+        </article>
+    </div>
+
+    <aside class="session-panel glass-panel">
+        <div class="panel-header compact">
+            <h2>Session Telemetry</h2>
+        </div>
+        <div class="telemetry-list">
+            <div><span>Phone Confidence</span><strong id="metric-phone-confidence">0.00</strong></div>
+            <div><span>EAR</span><strong id="metric-ear">0.00</strong></div>
+            <div><span>MAR</span><strong id="metric-mar">0.00</strong></div>
+            <div><span>Yaw</span><strong id="metric-yaw">0.0</strong></div>
+            <div><span>Pitch</span><strong id="metric-pitch">0.0</strong></div>
+            <div><span>Roll</span><strong id="metric-roll">0.0</strong></div>
+            <div><span>Processing</span><strong id="metric-processing">0 ms</strong></div>
+            <div><span>Dropped Frames</span><strong id="metric-dropped">0</strong></div>
+        </div>
+    </aside>
+</section>
 {% endblock %}

@@ -1,3 +1,8 @@
-venv311/ 
-__pycache__/ 
-*.pyc 
+venv311/
+venv/
+__pycache__/
+*.pyc
+.env
+data/
+*.db
+.DS_Store

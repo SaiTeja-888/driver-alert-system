@@ -6,10 +6,11 @@ class StateManager:
         self.lock = Lock()
         self.state = {
             "attention_score": 100,
-            "risk_score": 100,
+            "risk_score": 0,
             "risk_level": "LOW",
             "eye_status": "OPEN",
             "phone_status": "NO",
+            "phone_detected": False,
             "head_pose": "CENTER",
             "head_movement": "STABLE",
             "yawning": "NO",
@@ -23,6 +24,8 @@ class StateManager:
             "active_alerts": [],
             "last_event": "CLEAR",
             "camera_status": "WAITING",
+            "connection_status": "DISCONNECTED",
+            "session_id": None,
             "last_updated": datetime.now().isoformat(timespec="seconds"),
         }
 

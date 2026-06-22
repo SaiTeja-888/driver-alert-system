@@ -3,7 +3,7 @@
 {% block page_title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="dashboard-grid">
+<div class="dashboard-grid" data-dashboard-root>
     <!-- Top Stats Row -->
     <div class="stat-card glass-panel fade-in">
         <div class="stat-icon"><i class="fas fa-brain"></i></div>
@@ -40,8 +40,11 @@
             <h2>Live Feed Preview</h2>
             <a href="{{ url_for('views.live') }}" class="btn-primary">Full View</a>
         </div>
-        <div class="video-preview-container">
-            <img src="{{ url_for('api.video_feed') }}" alt="Live Feed" class="video-preview">
+        <div class="video-preview-container browser-preview">
+            <a href="{{ url_for('views.live') }}" class="video-preview-link">
+                <i class="fas fa-video"></i>
+                <span>Open Live Monitor</span>
+            </a>
             <div class="overlay-stats">
                 <div class="overlay-stat">EAR: <span id="dash-ear">--</span></div>
                 <div class="overlay-stat">MAR: <span id="dash-mar">--</span></div>

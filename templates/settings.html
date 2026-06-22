@@ -8,8 +8,11 @@
     
     <div class="settings-group" style="margin-top: 2rem;">
         <h3>Camera Settings</h3>
+        <p style="color: var(--muted); margin-bottom: 0.75rem;">
+            Camera access runs in your browser. Open Live Monitor and tap Start Monitoring to grant permission.
+        </p>
         <label>
-            <input type="checkbox" checked> Auto-start camera
+            <input type="checkbox" checked disabled> Browser camera (getUserMedia)
         </label>
     </div>
     
@@ -22,7 +25,7 @@
             Risk Threshold: 
             <select>
                 <option>Low (80)</option>
-                <option selected>Guarded (60)</option>
+                <option selected>Medium (60)</option>
                 <option>High (40)</option>
             </select>
         </label>

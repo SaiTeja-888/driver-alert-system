@@ -41,32 +41,43 @@
                     }
                 });
                 
-                // Placeholder Risk Line Chart (needs historical data API to be fully dynamic)
                 const ctxLine = document.getElementById('riskLineChart').getContext('2d');
-                new Chart(ctxLine, {
-                    type: 'line',
-                    data: {
-                        labels: ['10m', '8m', '6m', '4m', '2m', 'Now'],
-                        datasets: [{
-                            label: 'Risk Score',
-                            data: [10, 15, 20, 15, 30, 10], // Dummy data
-                            borderColor: '#ff4757',
-                            tension: 0.4,
-                            fill: true,
-                            backgroundColor: 'rgba(255, 71, 87, 0.2)'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
-                            x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } }
-                        },
-                        plugins: {
-                            legend: { labels: { color: '#fff' } }
-                        }
-                    }
-                });
+                fetch('/api/live')
+                    .then((response) => response.json())
+                    .then((live) => {
+                        const riskScore = Number(live.risk_score || 0);
+                        new Chart(ctxLine, {
+                            type: 'line',
+                            data: {
+                                labels: ['5m', '4m', '3m', '2m', '1m', 'Now'],
+                                datasets: [{
+                                    label: 'Risk Score',
+                                    data: [
+                                        Math.max(0, riskScore - 15),
+                                        Math.max(0, riskScore - 10),
+                                        Math.max(0, riskScore - 8),
+                                        Math.max(0, riskScore - 5),
+                                        Math.max(0, riskScore - 2),
+                                        riskScore,
+                                    ],
+                                    borderColor: '#ff4757',
+                                    tension: 0.4,
+                                    fill: true,
+                                    backgroundColor: 'rgba(255, 71, 87, 0.2)'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } }
+                                },
+                                plugins: {
+                                    legend: { labels: { color: '#fff' } }
+                                }
+                            }
+                        });
+                    });
             });
     });
 </script>

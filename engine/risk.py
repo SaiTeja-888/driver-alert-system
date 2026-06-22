@@ -24,7 +24,7 @@ class RiskEngine:
         if score >= 80:
             return "LOW"
         if score >= 60:
-            return "GUARDED"
+            return "MEDIUM"
         if score >= 40:
             return "HIGH"
         return "CRITICAL"

@@ -14,12 +14,13 @@ torch.load = _safe_torch_load
 
 class PhoneDetector:
     def __init__(self, confidence=0.12, iou=0.5):
-        print(f"Loading YOLO phone detection model from {YOLO_MODEL_PATH}...")
-        self.model = YOLO(str(YOLO_MODEL_PATH))
+        model_source = str(YOLO_MODEL_PATH) if YOLO_MODEL_PATH.exists() else "yolo11n.pt"
+        print(f"Loading YOLO phone detection model from {model_source}...")
+        self.model = YOLO(model_source)
         self.confidence = confidence
         self.iou = iou
 
-    def process_frame(self, frame):
+    def process_frame(self, frame, annotate=True):
         phone_detected = False
         phone_confidence = 0.0
 
@@ -39,6 +40,9 @@ class PhoneDetector:
 
                 phone_detected = True
                 phone_confidence = max(phone_confidence, conf)
+
+                if not annotate:
+                    continue
 
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 70, 255), 3)
